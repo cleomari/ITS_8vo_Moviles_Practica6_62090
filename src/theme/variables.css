@@ -1,5 +1,7 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+@import "tailwindcss";
+
 * {
 	margin: 0;
 	padding: 0;

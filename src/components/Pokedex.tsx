@@ -6,6 +6,7 @@ import React from 'react';
 
 import '../theme/variables.css';
 import { PokedexMenu } from './Menu/PokedexMenu';
+import { Cross } from './Buttons/Cross';
 
 const Pokedex: React.FC = () => {
   return (
@@ -49,23 +50,7 @@ const Pokedex: React.FC = () => {
         <div id="bigbluebutton" className="gameboy-button"></div>
         <div id="barbutton1" className="gameboy-button"></div>
         <div id="barbutton2" className="gameboy-button"></div>
-        <div id="cross">
-          <div id="leftcross" className="gameboy-button">
-            <div id="leftT"></div>
-          </div>
-          <div id="topcross" className="gameboy-button">
-            <div id="upT"></div>
-          </div>
-          <div id="rightcross" className="gameboy-button">
-            <div id="rightT"></div>
-          </div>
-          <div id="midcross" className="gameboy-button">
-            <div id="midCircle"></div>
-          </div>
-          <div id="botcross" className="gameboy-button">
-            <div id="downT"></div>
-          </div>
-        </div>
+        <Cross />
       </div>
     </div>
       </IonContent>
