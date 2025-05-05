@@ -20,8 +20,8 @@ http://ionicframework.com/docs/theming/ */
 
 	div#pokedex
 	{
-		width: 750px;
-		margin: 50px auto 0 auto;
+		width: 400px;
+		margin: 50px auto;
 	}
 
 	div#left
@@ -1022,12 +1022,6 @@ http://ionicframework.com/docs/theming/ */
 		-moz-border-top-left-radius: 30px;
 		-o-border-top-left-radius: 30px;
 	}
-
-	div#right, div#screen, div#bigbluebutton, div#barbutton1, div#barbutton2, div#cross
-	{
-		display: none;
-	}
-
 }
 
 .gameboy-button {

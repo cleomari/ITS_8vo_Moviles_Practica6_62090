@@ -22,6 +22,7 @@ import '@ionic/react/css/text-transformation.css';
 import Pokedex from './components/Pokedex';
 import './theme/variables.css';
 import { MenuPokedexProvider } from './contexts/MenuPokedexProvider';
+import { PokedexMenu } from './components/Menu/PokedexMenu';
 
 setupIonicReact();
 
@@ -29,14 +30,24 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <MenuPokedexProvider>
-            <Pokedex />
-          </MenuPokedexProvider>
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
+        <MenuPokedexProvider>
+          <Pokedex>
+            <Route exact path="/home">
+              <PokedexMenu />
+            </Route>
+            <Route exact path="/pokedex">
+              <>Esta es la Pokedex</>
+            </Route>
+            <Route exact path="/pack">
+              <>Esta es la bolsa de objetos</>
+            </Route>
+            <Route exact path="/exit">
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </Pokedex>
+        </MenuPokedexProvider>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
