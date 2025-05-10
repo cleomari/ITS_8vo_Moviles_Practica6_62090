@@ -32,7 +32,7 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
 }
 
   const toggleScreen = () => {
-    if (screen === EPokedexScreen.EXIT) {
+    if (screen === EPokedexScreen.EXIT || screen === EPokedexScreen.DETAIL) {
       setScreen(EPokedexScreen.MENU);
       setMenuOption(EPokedexMenuOption.POKEDEX);
       router.push('/home');

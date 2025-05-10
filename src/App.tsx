@@ -21,6 +21,7 @@ import { PokedexMenu } from './components/Menu/PokedexMenu';
 import PokedexListScreen from './components/Screens/PokedexListScreen';
 import React, { useRef } from 'react';
 import ItemListScreen from './components/Screens/ItemListScreen';
+import ExitScreen from './components/Screens/ExitScreen';
 
 
 setupIonicReact();
@@ -44,10 +45,13 @@ const App: React.FC = () => {
                <ItemListScreen ref={listRef}/> 
               </Route>
               <Route exact path="/exit">
-                <>Saliendo...</>
+                <ExitScreen />
               </Route>
               <Route exact path="/">
                 <Redirect to="/home" />
+              </Route>
+              <Route path="*">
+              <Redirect to="/home" />
               </Route>
             </Pokedex>
           </MenuPokedexProvider>
