@@ -3,7 +3,7 @@ import { createContext } from "react";
 export enum EPokedexMenuOption {
   POKEDEX = 1,
   PACK = 2,
-  EXIT = 3
+  EXIT = 3,
 }
 
 export enum EPokedexScreen {
@@ -26,7 +26,7 @@ export type TMenuPokedexContext = {
   activePokemonData: TPokemonBasic | null;
   setScreen: (option: EPokedexScreen) => void;
   setMenuOption: (option: EPokedexMenuOption) => void;
-  setSelectedPokemonIndex: (index: number) => void;
+  setSelectedPokemonIndex: React.Dispatch<React.SetStateAction<number>>;
   setActivePokemonData: (pokemon: TPokemonBasic | null) => void;
 };
 
@@ -40,3 +40,5 @@ export const MenuPokedexContext = createContext<TMenuPokedexContext>({
   setSelectedPokemonIndex: () => {},
   setActivePokemonData: () => {},
 });
+
+export default MenuPokedexContext;

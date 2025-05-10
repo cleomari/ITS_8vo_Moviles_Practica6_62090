@@ -9,10 +9,15 @@ import { EPokedexMenuOption, EPokedexScreen, MenuPokedexContext } from '../conte
 import '../theme/variables.css';
 import { Cross } from './Buttons/Cross';
 
-const Pokedex: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface PokedexProps {
+  children: React.ReactNode;
+  listRef: React.RefObject<any>;
+}
+
+const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
   const { menuOption, screen, setMenuOption, setScreen } = useContext(MenuPokedexContext);
   const router = useIonRouter();
-  
+
   const onBigBlueButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (screen === EPokedexScreen.MENU) {
       e.preventDefault();
@@ -32,7 +37,7 @@ const Pokedex: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       router.push('/exit');
     }
   }
-  
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -66,8 +71,7 @@ const Pokedex: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 id="buttonbottomPicture"
                 className="gameboy-button"
                 onClick={toggleScreen}
-              >
-              </div>
+              ></div>
               <div id="speakers">
                 <div className="sp"></div>
                 <div className="sp"></div>
@@ -79,11 +83,10 @@ const Pokedex: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               id="bigbluebutton"
               className="gameboy-button"
               onClick={onBigBlueButtonClick}
-            >
-            </div>
+            ></div>
             <div id="barbutton1" className="gameboy-button"></div>
             <div id="barbutton2" className="gameboy-button"></div>
-            <Cross />
+            <Cross listRef={listRef} />
           </div>
         </div>
       </IonContent>

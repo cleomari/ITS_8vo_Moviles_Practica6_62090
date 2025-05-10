@@ -1,11 +1,14 @@
-// src/components/Buttons/Cross.tsx
 import { useContext } from "react";
 import {
   EPokedexScreen,
   MenuPokedexContext,
 } from "../../contexts/MenuPokedexContext";
 
-export const Cross = () => {
+type CrossProps = {
+  listRef: React.RefObject<any>;
+};
+
+export const Cross = ({ listRef }: CrossProps) => {
   const {
     screen,
     menuOption,
@@ -19,12 +22,10 @@ export const Cross = () => {
       const newOption = menuOption - 1 < 1 ? 3 : menuOption - 1;
       setMenuOption(newOption);
     } else if (screen === EPokedexScreen.POKEDEX) {
-      if (selectedPokemonIndex > 0) {
-        setSelectedPokemonIndex(selectedPokemonIndex - 1);
+      if (selectedPokemonIndex === 0) {
+        listRef?.current?.goPrev?.();
       } else {
-        // Ir a la página anterior (si hay)
-        const prevPageStart = Math.max(0, selectedPokemonIndex - 6);
-        setSelectedPokemonIndex(prevPageStart);
+        setSelectedPokemonIndex((prev) => prev - 1);
       }
     }
   };
@@ -34,7 +35,11 @@ export const Cross = () => {
       const newOption = menuOption + 1 > 3 ? 1 : menuOption + 1;
       setMenuOption(newOption);
     } else if (screen === EPokedexScreen.POKEDEX) {
-      setSelectedPokemonIndex(selectedPokemonIndex + 1);
+      if (selectedPokemonIndex === 5) {
+        listRef?.current?.goNext?.();
+      } else {
+        setSelectedPokemonIndex((prev) => prev + 1);
+      }
     }
   };
 
@@ -58,3 +63,5 @@ export const Cross = () => {
     </div>
   );
 };
+
+export default Cross;

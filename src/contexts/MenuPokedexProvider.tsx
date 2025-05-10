@@ -1,4 +1,4 @@
-import { JSX, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   EPokedexMenuOption,
   EPokedexScreen,
@@ -6,14 +6,14 @@ import {
   TPokemonBasic
 } from "./MenuPokedexContext";
 
-export const MenuPokedexProvider = ({
-  children,
-}: {
-  children: ReactNode | JSX.Element | JSX.Element[];
-}) => {
+type Props = {
+  children: ReactNode;
+};
+
+export const MenuPokedexProvider = ({ children }: Props) => {
   const [screen, setScreen] = useState(EPokedexScreen.MENU);
   const [menuOption, setMenuOption] = useState(EPokedexMenuOption.POKEDEX);
-  const [selectedPokemonIndex, setSelectedPokemonIndex] = useState(0);
+  const [selectedPokemonIndex, setSelectedPokemonIndex] = useState<number>(0);
   const [activePokemonData, setActivePokemonData] = useState<TPokemonBasic | null>(null);
 
   return (
@@ -26,7 +26,7 @@ export const MenuPokedexProvider = ({
         setScreen,
         setMenuOption,
         setSelectedPokemonIndex,
-        setActivePokemonData
+        setActivePokemonData,
       }}
     >
       {children}

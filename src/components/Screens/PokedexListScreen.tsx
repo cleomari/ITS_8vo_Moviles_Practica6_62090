@@ -2,6 +2,8 @@ import React, {
   useEffect,
   useState,
   useContext,
+  useImperativeHandle,
+  forwardRef,
 } from 'react';
 import { EPokedexScreen, MenuPokedexContext } from "../../contexts/MenuPokedexContext";
 
@@ -13,7 +15,7 @@ interface Pokemon {
 
 const LIMIT = 6;
 
-export const PokedexListScreen = () => {
+const PokedexListScreen = forwardRef((props, ref) => {
   const {
     selectedPokemonIndex,
     setSelectedPokemonIndex,
@@ -24,7 +26,7 @@ export const PokedexListScreen = () => {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [offset, setOffset] = useState(0);
 
-  const loadPokemons = async (nextOffset: number) => {
+  const loadPokemons = async (nextOffset: number, defaultIndex = 0) => {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${nextOffset}`);
     const data = await response.json();
 
@@ -42,7 +44,7 @@ export const PokedexListScreen = () => {
 
     setPokemonList(pokemonWithImages);
     setOffset(nextOffset);
-    setSelectedPokemonIndex(0);
+    setSelectedPokemonIndex(defaultIndex);
   };
 
   useEffect(() => {
@@ -52,16 +54,28 @@ export const PokedexListScreen = () => {
   }, [screen]);
 
   useEffect(() => {
-    if (selectedPokemonIndex >= LIMIT) {
-      // ir a la siguiente página
-      loadPokemons(offset + LIMIT);
-    } else if (selectedPokemonIndex < 0 && offset > 0) {
-      // ir a la página anterior
-      loadPokemons(offset - LIMIT);
-    } else if (pokemonList[selectedPokemonIndex]) {
+    if (pokemonList[selectedPokemonIndex]) {
       setActivePokemonData(pokemonList[selectedPokemonIndex]);
     }
-  }, [selectedPokemonIndex]);
+  }, [selectedPokemonIndex, pokemonList]);
+
+  // Exponer funciones al botón Cross
+  useImperativeHandle(ref, () => ({
+    goNext: () => {
+      if (selectedPokemonIndex < LIMIT - 1) {
+        setSelectedPokemonIndex(selectedPokemonIndex + 1);
+      } else {
+        loadPokemons(offset + LIMIT, 0);
+      }
+    },
+    goPrev: () => {
+      if (selectedPokemonIndex > 0) {
+        setSelectedPokemonIndex(selectedPokemonIndex - 1);
+      } else if (offset > 0) {
+        loadPokemons(offset - LIMIT, LIMIT - 1);
+      }
+    }
+  }));
 
   return (
     <div className="font-pokemon text-xs !m-2 !p-2 border-3 border-double border-black rounded-md h-[calc(100%-1rem)]">
@@ -82,6 +96,6 @@ export const PokedexListScreen = () => {
       ))}
     </div>
   );
-};
+});
 
 export default PokedexListScreen;
