@@ -1,3 +1,4 @@
+// src/components/Buttons/Cross.tsx
 import { useContext } from "react";
 import {
   EPokedexScreen,
@@ -18,7 +19,13 @@ export const Cross = () => {
       const newOption = menuOption - 1 < 1 ? 3 : menuOption - 1;
       setMenuOption(newOption);
     } else if (screen === EPokedexScreen.POKEDEX) {
-      setSelectedPokemonIndex(selectedPokemonIndex > 0 ? selectedPokemonIndex - 1 : 0);
+      if (selectedPokemonIndex > 0) {
+        setSelectedPokemonIndex(selectedPokemonIndex - 1);
+      } else {
+        // Ir a la página anterior (si hay)
+        const prevPageStart = Math.max(0, selectedPokemonIndex - 6);
+        setSelectedPokemonIndex(prevPageStart);
+      }
     }
   };
 
@@ -27,7 +34,7 @@ export const Cross = () => {
       const newOption = menuOption + 1 > 3 ? 1 : menuOption + 1;
       setMenuOption(newOption);
     } else if (screen === EPokedexScreen.POKEDEX) {
-      setSelectedPokemonIndex(selectedPokemonIndex + 1 < 6 ? selectedPokemonIndex + 1 : 0); // El límite se maneja en la lista
+      setSelectedPokemonIndex(selectedPokemonIndex + 1);
     }
   };
 
