@@ -20,6 +20,7 @@ const PokedexListScreen = forwardRef((props, ref) => {
     selectedPokemonIndex,
     setSelectedPokemonIndex,
     setActivePokemonData,
+    setScreen,
     screen,
   } = useContext(MenuPokedexContext);
 
@@ -59,18 +60,18 @@ const PokedexListScreen = forwardRef((props, ref) => {
     }
   }, [selectedPokemonIndex, pokemonList]);
 
-  // Exponer funciones al botón Cross
+  // Navegación con botones
   useImperativeHandle(ref, () => ({
     goNext: () => {
       if (selectedPokemonIndex < LIMIT - 1) {
-        setSelectedPokemonIndex(selectedPokemonIndex + 1);
+        setSelectedPokemonIndex((prev) => prev + 1);
       } else {
         loadPokemons(offset + LIMIT, 0);
       }
     },
     goPrev: () => {
       if (selectedPokemonIndex > 0) {
-        setSelectedPokemonIndex(selectedPokemonIndex - 1);
+        setSelectedPokemonIndex((prev) => prev - 1);
       } else if (offset > 0) {
         loadPokemons(offset - LIMIT, LIMIT - 1);
       }
@@ -85,6 +86,10 @@ const PokedexListScreen = forwardRef((props, ref) => {
           className={`flex items-center gap-2 ${
             idx === selectedPokemonIndex ? 'bg-gray-200 rounded' : ''
           }`}
+          onClick={() => {
+            setActivePokemonData(pokemon);
+            setSelectedPokemonIndex(idx);
+          }}
         >
           <img
             src={pokemon.image}

@@ -8,6 +8,7 @@ import React, { useContext } from 'react';
 import { EPokedexMenuOption, EPokedexScreen, MenuPokedexContext } from '../contexts/MenuPokedexContext';
 import '../theme/variables.css';
 import { Cross } from './Buttons/Cross';
+import PokemonDetailScreen from './Screens/PokemonDetailScreen'; // ⚠️ importar
 
 interface PokedexProps {
   children: React.ReactNode;
@@ -19,13 +20,15 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
   const router = useIonRouter();
 
   const onBigBlueButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (screen === EPokedexScreen.MENU) {
-      e.preventDefault();
-      const path = EPokedexMenuOption[menuOption].toLowerCase();
-      setScreen(menuOption as unknown as EPokedexScreen)
-      router.push(`/${path}`);
-    }
+  e.preventDefault();
+  if (screen === EPokedexScreen.MENU) {
+    const path = EPokedexMenuOption[menuOption].toLowerCase();
+    setScreen(menuOption as unknown as EPokedexScreen);
+    router.push(`/${path}`);
+  } else if (screen === EPokedexScreen.POKEDEX) {
+    setScreen(EPokedexScreen.DETAIL); // 💥 Cambia a la vista detallada del Pokémon activo
   }
+}
 
   const toggleScreen = () => {
     if (screen === EPokedexScreen.EXIT) {
@@ -46,9 +49,7 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
             <div id="bg_curve1_left"></div>
             <div id="bg_curve2_left"></div>
             <div id="curve1_left">
-              <div id="buttonGlass">
-                <div id="reflect"></div>
-              </div>
+              <div id="buttonGlass"><div id="reflect"></div></div>
               <div id="miniButtonGlass1"></div>
               <div id="miniButtonGlass2"></div>
               <div id="miniButtonGlass3"></div>
@@ -65,13 +66,9 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
                 <div id="buttontopPicture2"></div>
               </div>
               <div id="picture">
-                {children}
+                {screen === EPokedexScreen.DETAIL ? <PokemonDetailScreen /> : children}
               </div>
-              <div
-                id="buttonbottomPicture"
-                className="gameboy-button"
-                onClick={toggleScreen}
-              ></div>
+              <div id="buttonbottomPicture" className="gameboy-button" onClick={toggleScreen}></div>
               <div id="speakers">
                 <div className="sp"></div>
                 <div className="sp"></div>
@@ -79,11 +76,7 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
                 <div className="sp"></div>
               </div>
             </div>
-            <div
-              id="bigbluebutton"
-              className="gameboy-button"
-              onClick={onBigBlueButtonClick}
-            ></div>
+            <div id="bigbluebutton" className="gameboy-button" onClick={onBigBlueButtonClick}></div>
             <div id="barbutton1" className="gameboy-button"></div>
             <div id="barbutton2" className="gameboy-button"></div>
             <Cross listRef={listRef} />
