@@ -21,7 +21,7 @@ export const Cross = ({ listRef }: CrossProps) => {
     if (screen === EPokedexScreen.MENU) {
       const newOption = menuOption - 1 < 1 ? 3 : menuOption - 1;
       setMenuOption(newOption);
-    } else if (screen === EPokedexScreen.POKEDEX) {
+    } else if (screen === EPokedexScreen.POKEDEX || screen === EPokedexScreen.PACK) {
       if (selectedPokemonIndex === 0) {
         listRef?.current?.goPrev?.();
       } else {
@@ -34,7 +34,7 @@ export const Cross = ({ listRef }: CrossProps) => {
     if (screen === EPokedexScreen.MENU) {
       const newOption = menuOption + 1 > 3 ? 1 : menuOption + 1;
       setMenuOption(newOption);
-    } else if (screen === EPokedexScreen.POKEDEX) {
+    } else if (screen === EPokedexScreen.POKEDEX || screen === EPokedexScreen.PACK) {
       if (selectedPokemonIndex === 5) {
         listRef?.current?.goNext?.();
       } else {

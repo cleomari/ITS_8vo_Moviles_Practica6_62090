@@ -20,6 +20,8 @@ import { MenuPokedexProvider } from './contexts/MenuPokedexProvider';
 import { PokedexMenu } from './components/Menu/PokedexMenu';
 import PokedexListScreen from './components/Screens/PokedexListScreen';
 import React, { useRef } from 'react';
+import ItemListScreen from './components/Screens/ItemListScreen';
+
 
 setupIonicReact();
 
@@ -39,7 +41,7 @@ const App: React.FC = () => {
                 <PokedexListScreen ref={listRef} />
               </Route>
               <Route exact path="/pack">
-                <>Esta es la bolsa de objetos</>
+               <ItemListScreen ref={listRef}/> 
               </Route>
               <Route exact path="/exit">
                 <>Saliendo...</>

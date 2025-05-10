@@ -9,6 +9,7 @@ import { EPokedexMenuOption, EPokedexScreen, MenuPokedexContext } from '../conte
 import '../theme/variables.css';
 import { Cross } from './Buttons/Cross';
 import PokemonDetailScreen from './Screens/PokemonDetailScreen'; // ⚠️ importar
+import ItemDetailScreen from './Screens/ItemDetailScreen';
 
 interface PokedexProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
     const path = EPokedexMenuOption[menuOption].toLowerCase();
     setScreen(menuOption as unknown as EPokedexScreen);
     router.push(`/${path}`);
-  } else if (screen === EPokedexScreen.POKEDEX) {
+  } else if (screen === EPokedexScreen.POKEDEX || screen === EPokedexScreen.PACK) {
     setScreen(EPokedexScreen.DETAIL); // 💥 Cambia a la vista detallada del Pokémon activo
   }
 }
@@ -66,7 +67,11 @@ const Pokedex: React.FC<PokedexProps> = ({ children, listRef }) => {
                 <div id="buttontopPicture2"></div>
               </div>
               <div id="picture">
-                {screen === EPokedexScreen.DETAIL ? <PokemonDetailScreen /> : children}
+                {screen === EPokedexScreen.DETAIL
+                  ? menuOption === EPokedexMenuOption.POKEDEX
+                    ? <PokemonDetailScreen />
+                    : <ItemDetailScreen />
+                  : children}
               </div>
               <div id="buttonbottomPicture" className="gameboy-button" onClick={toggleScreen}></div>
               <div id="speakers">
